@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+
+  backend:
+    build: ./services/backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./services/backend:/app
+    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 5000
+    environment:
+      - DB_HOST=172.22.0.5:5432
+      - DB_NAME=movie_house
+      - DATABASE_URL=postgresql://movie:house@db:5432/movie_house
+      - SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
+    depends_on:
+      - db
+
+  frontend:
+    build: ./services/frontend
+    volumes:
+      - './services/frontend:/app'
+      - '/app/node_modules'
+    ports:
+      - "8080:8080"
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=movie
+      - POSTGRES_PASSWORD=house
+      - POSTGRES_DB=movie_house
+    ports:
+      - "5435:5432"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8008:8080"
+
+volumes:
+  postgres_data:
