@@ -16,6 +16,7 @@ class Movie(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(256))
     description = Column(Text)
+    screenings = relationship('Screening', back_populates='movie')
 
 
 class Screening(Base):
@@ -34,6 +35,7 @@ class Auditorium(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(32))
+    screenings = relationship('Screening', back_populates='auditorium')
 
 
 class Seat(Base):
@@ -43,7 +45,7 @@ class Seat(Base):
     row = Column(Integer)
     number = Column(Integer)
     auditorium_id = Column(Integer, ForeignKey('auditorium.id'))
-    auditorium = relationship('Auditorium', back_populates='seats')
+    auditorium = relationship('Auditorium')
 
 
 class SeatReserved(Base):
@@ -51,11 +53,11 @@ class SeatReserved(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     seat_id = Column(Integer, ForeignKey('seat.id'))
-    seat = relationship('Seat', back_populates='seats_reserved')
+    seat = relationship('Seat')
     reservation_id = Column(Integer, ForeignKey('reservation.id'))
-    reservation = relationship('Reservation', back_populates='seats_reserved')
+    reservation = relationship('Reservation')
     screening_id = Column(Integer, ForeignKey('screening.id'))
-    screening = relationship('Screening', back_populates='seats_reserved')
+    screening = relationship('Screening')
 
 
 class Employee(Base):
@@ -73,9 +75,9 @@ class Reservation(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     screening_id = Column(Integer, ForeignKey('screening.id'))
-    screening = relationship('Screening', back_populates='reservations')
+    screening = relationship('Screening')
     employee_id = Column(Integer, ForeignKey('employee.id'))
-    employee = relationship('Employee', back_populates='reservations')
+    employee = relationship('Employee')
     paid = Column(Boolean)
     active = Column(Boolean)
 

@@ -3,7 +3,8 @@ from starlette.middleware.cors import CORSMiddleware
 
 from .database.database import engine
 from .database.database import Base
-
+from .database.database import session
+from .database.models import Seat
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
@@ -24,4 +25,9 @@ async def home():
 
 @app.get('/seats')
 async def awailable_seats():
-    return 
+    print(session.query(Seat).all())
+    return [
+        {'number': 1},
+        {'number': 2},
+        {'number': 3}
+    ]

@@ -1,12 +1,12 @@
 <template>
-    <div class="form-body">
+<div class="form-body">
       <div class="row">
           <div class="form-holder">
               <div class="form-content">
                   <div class="form-items">
-                      <h3 class="text-black">Register Today</h3>
+                      <h3 class="text-black">Login</h3>
                       <p class="text-black">Fill in the data below.</p>
-                      <form class="requires-validation" novalidate>
+                      <form class="requires-validation" action="/login" novalidate>
 
                           <div class="col-md-12">
                              <input class="form-control" type="text" name="name" placeholder="Username" required>
@@ -21,7 +21,7 @@
                          </div>
 
                           <div class="form-button mt-3">
-                              <button id="submit" type="submit" class="btn btn-primary">Register</button>
+                              <button id="submit" type="submit" class="btn btn-primary">Login</button>
                           </div>
                       </form>
                   </div>
@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: "Registration",
+  name: "Login",
   created() {
     (function () {
       'use strict'
@@ -52,7 +52,6 @@ export default {
     })()
   }
 }
-
 </script>
 
 <style scoped>
